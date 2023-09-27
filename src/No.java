@@ -91,15 +91,23 @@ public class No {
     }
 
     public No deletar(int valor) {
+        return deletarRecursivo(valor, false);
+    }
+
+    private No deletarRecursivo(int valor, boolean mensagemImpressa) {
         if (valor > getValor()) {
             if (this.direita != null) {
-                this.direita = this.direita.deletar(valor);
+                this.direita = this.direita.deletarRecursivo(valor, mensagemImpressa);
             }
         } else if (valor < getValor()) {
             if (this.esquerda != null) {
-                this.esquerda = this.esquerda.deletar(valor);
+                this.esquerda = this.esquerda.deletarRecursivo(valor, mensagemImpressa);
             }
         } else {
+            if (!mensagemImpressa) {
+                System.out.println("Valor " + valor + " deletado.");
+            }
+            mensagemImpressa = true;
             if (this.esquerda == null) {
                 return this.direita;
             } else if (this.direita == null) {
@@ -107,12 +115,12 @@ public class No {
             } else {
                 No sucessor = obterSucessor();
                 this.setValor(sucessor.getValor());
-                this.direita = this.direita.deletar(sucessor.getValor());
+                this.direita = this.direita.deletarRecursivo(sucessor.getValor(), mensagemImpressa);
             }
         }
-        System.out.println("Valor " + valor + " deletado.");
         return this;
     }
+
 
 
     private No obterSucessor() {
