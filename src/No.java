@@ -110,6 +110,7 @@ public class No {
                 this.direita = this.direita.deletar(sucessor.getValor());
             }
         }
+        System.out.println("Valor " + valor + " deletado.");
         return this;
     }
 
